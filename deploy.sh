@@ -9,7 +9,7 @@ git add .
 git commit -m "Deploy from Replit"
 
 # Push to the repository
-git push -u origin main
+git push -u origin main --force
 
 # Ensure Node.js and npm are available
 if ! command -v npm &> /dev/null; then
