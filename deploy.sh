@@ -59,19 +59,20 @@ cat <<EOT > netlify.toml
 EOT
 # Step 6: Create and activate the Python virtual environment
 python3.10 -m venv venv
-# Activate the virtual environment
-source venv/bin/activate
-# Step 7: Install dependencies within the virtual environment
-pip install -r requirements.txt
-# Step 8:  Install Netlify CLI within the virtual environment
-pip install netlify-cli 
-# Step 9: Add all changes to git and commit
-git add .
-git commit -m "Deploy from Replit and update configuration files"
-# Step 10: Push to the repository
-git push -u origin main --force
-# Step 11: Deploy to Netlify (ensure the virtual environment is activated)
-export NETLIFY_AUTH_TOKEN=${NETLIFY_AUTH_TOKEN} 
-netlify deploy --prod --dir=. --site=a3b5bb87-099a-46d2-aed3-f50ed90fbc96
+# Activate the virtual environment and run subsequent commands within it
+. venv/bin/activate && (
+  # Step 7: Install dependencies within the virtual environment
+  pip install -r requirements.txt
+  # Step 8:  Install Netlify CLI within the virtual environment
+  pip install netlify-cli 
+  # Step 9: Add all changes to git and commit
+  git add .
+  git commit -m "Deploy from Replit and update configuration files"
+  # Step 10: Push to the repository
+  git push -u origin main --force
+  # Step 11: Deploy to Netlify (ensure the virtual environment is activated)
+  export NETLIFY_AUTH_TOKEN=${NETLIFY_AUTH_TOKEN} 
+  netlify deploy --prod --dir=. --site=a3b5bb87-099a-46d2-aed3-f50ed90fbc96
+)
 # Deactivate virtual environment
 deactivate
