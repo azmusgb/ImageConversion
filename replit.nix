@@ -1,4 +1,4 @@
-{pkgs}: {
+p{pkgs}: {
   deps = [
     pkgs.python311Packages.gunicorn
     pkgs.php82

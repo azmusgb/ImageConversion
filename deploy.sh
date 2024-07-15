@@ -27,4 +27,4 @@ fi
 
 # Deploy to Netlify
 export NETLIFY_AUTH_TOKEN=${NETLIFY_AUTH_TOKEN}
-netlify deploy --prod --dir=static --site=a3b5bb87-099a-46d2-aed3-f50ed90fbc96
+netlify deploy --prod --dir=. --site=a3b5bb87-099a-46d2-aed3-f50ed90fbc96
