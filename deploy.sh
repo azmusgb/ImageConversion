@@ -62,27 +62,17 @@ python3.10 -m venv venv
 source venv/bin/activate
 # Step 7: Install dependencies within the virtual environment
 pip install -r requirements.txt
-pip install netlify-cli  # Install Netlify CLI within the virtual environment
-# Step 8: Add all changes to git and commit
+# Step 8:  Install Netlify CLI within the virtual environment
+pip install netlify-cli 
+# Step 9: Add all changes to git and commit
 git add .
 git commit -m "Deploy from Replit and update configuration files"
-# Step 9: Push to the repository
+# Step 10: Push to the repository
 git push -u origin main --force
-# Step 10: Ensure Node.js and npm are available 
-# (This step is usually handled by Replit's environment)
-# if ! command -v npm &> /dev/null; then
-#    echo "npm not found, installing..."
-#    curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-#    apt-get install -y nodejs
-# fi
-# Step 11: Ensure Netlify CLI is installed (already installed in step 7)
-# if ! command -v netlify &> /dev/null; then
-#    echo "Netlify CLI not found, installing..."
-#    npm install -g netlify-cli
-# fi
+# Step 11:  Add virtual environment bin to PATH
+export PATH="$PATH:$PWD/venv/bin" 
 # Step 12: Deploy to Netlify 
-export NETLIFY_AUTH_TOKEN=${NETLIFY_AUTH_TOKEN}
-export PATH="$PATH:$PWD/venv/bin"  # Add virtual environment bin to PATH
+export NETLIFY_AUTH_TOKEN=${NETLIFY_AUTH_TOKEN} 
 netlify deploy --prod --dir=. --site=a3b5bb87-099a-46d2-aed3-f50ed90fbc96
 # Deactivate virtual environment
 deactivate
