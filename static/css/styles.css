@@ -1,5 +1,5 @@
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: #f0f2f5;
   margin: 0;
   padding: 0;
@@ -10,7 +10,7 @@ body {
 
 header {
   width: 100%;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 1rem 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -52,7 +52,8 @@ header nav a:hover {
   margin-bottom: 2rem;
 }
 
-h1, h2 {
+h1,
+h2 {
   color: #333;
 }
 
@@ -84,7 +85,7 @@ button {
 }
 
 button {
-  background: #4CAF50;
+  background: #4caf50;
   color: white;
   border: none;
   cursor: pointer;
@@ -125,8 +126,8 @@ button:hover {
 }
 
 .tab-button.active {
-  border-bottom-color: #4CAF50;
-  color: #4CAF50;
+  border-bottom-color: #4caf50;
+  color: #4caf50;
 }
 
 .tab-content {
@@ -142,11 +143,14 @@ table {
   border-collapse: collapse;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid #ddd;
 }
 
-th, td {
+th,
+td {
   padding: 0.75rem;
   text-align: left;
 }
@@ -181,8 +185,8 @@ input[type="range"] {
 
 @media (min-width: 768px) {
   .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
   }
 }

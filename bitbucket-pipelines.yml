@@ -10,7 +10,7 @@ pipelines:
           - python -m venv venv
           - source venv/bin/activate
           - pip install -r requirements.txt
-          - pytest  # Assuming you have tests in your repository
+          - pytest # Assuming you have tests in your repository
 
     - step:
         name: Deploy to Netlify
@@ -18,5 +18,5 @@ pipelines:
           - apt-get update && apt-get install -y curl unzip
           - curl -o netlify-cli.zip https://cli.netlify.com/download/latest
           - unzip netlify-cli.zip -d netlify-cli
-          - export NETLIFY_AUTH_TOKEN=your_netlify_auth_token  # Set your Netlify auth token
+          - export NETLIFY_AUTH_TOKEN=your_netlify_auth_token # Set your Netlify auth token
           - ./netlify-cli/bin/netlify deploy --prod --dir=. --site=<your-site-id>
