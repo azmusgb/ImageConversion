@@ -3,7 +3,7 @@
 # Initialize a new git repository or reinitialize an existing one
 git init
 git remote remove origin
-git remote add origin https://github.com/azmusgb/ImageConversion.git
+git remote add origin https://azmusgb:${GITHUB_TOKEN}@github.com/azmusgb/ImageConversion.git
 
 # Add all changes to git
 git add .
@@ -26,9 +26,5 @@ if ! command -v netlify &> /dev/null; then
 fi
 
 # Deploy to Netlify
-if [ -z "$NETLIFY_AUTH_TOKEN" ]; then
-    echo "NETLIFY_AUTH_TOKEN not set. Please set it in your environment variables."
-    exit 1
-fi
-
+export NETLIFY_AUTH_TOKEN=${NETLIFY_AUTH_TOKEN}
 netlify deploy --prod --dir=. --site=a3b5bb87-099a-46d2-aed3-f50ed90fbc96
