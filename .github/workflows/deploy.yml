@@ -27,8 +27,13 @@ jobs:
         with:
           context: .
           push: true
-          tags: greenbreard/imageconversion:tagname
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/imageconversion:latest
 
       - name: Post Log in to Docker Hub
         run: echo "Logged in to Docker Hub"
-        
+
+      - name: Set up Docker Buildx
+        run: docker buildx create --use
+
+      - name: Post Set up Docker Buildx
+        run: echo "Set up Docker Buildx"
