@@ -38,4 +38,4 @@ jobs:
         run: echo "Set up Docker Buildx"
 
       - name: Build and push Docker image
-        run: docker buildx build --push --tag ${{ secrets.DOCKER_HUB_USERNAME }}/my-repo:latest .
+        run: docker buildx build --push --tag ${{ secrets.DOCKER_HUB_USERNAME }}/imageconversion:latest .
