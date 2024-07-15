@@ -2,7 +2,8 @@
 
 # Initialize a new git repository or reinitialize an existing one
 git init
-git remote add origin https://github.com/azmusgb/ImageConversion.git || echo "Remote origin already exists."
+git remote remove origin
+git remote add origin https://github.com/azmusgb/ImageConversion.git
 
 # Add all changes to git
 git add .
