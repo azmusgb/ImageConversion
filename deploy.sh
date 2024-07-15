@@ -25,8 +25,10 @@ if ! command -v netlify &> /dev/null; then
     npm install -g netlify-cli
 fi
 
-# Set up virtual environment
-python -m venv venv
+# Create virtual environment
+python3.8 -m venv venv
+
+# Activate virtual environment
 source venv/bin/activate
 
 # Install dependencies
