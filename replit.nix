@@ -1,10 +1,10 @@
 { pkgs }: {
   deps = [
-    pkgs.python38Full
-    pkgs.python38Packages.flask
-    pkgs.python38Packages.pillow
-    pkgs.python38Packages.sqlalchemy
-    pkgs.python38Packages.flask_sqlalchemy
-    pkgs.nodejs-16_x  # Correct Node.js version
+    pkgs.python310Full
+    pkgs.python310Packages.flask
+    pkgs.python310Packages.pillow
+    pkgs.python310Packages.sqlalchemy
+    pkgs.python310Packages.flask_sqlalchemy
+    pkgs.nodejs-20_x  # Correct Node.js version
   ];
 }

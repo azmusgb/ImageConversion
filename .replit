@@ -1,5 +1,5 @@
 entrypoint = "app.py"
-modules = ["python-3.8", "nodejs-16_x"]
+modules = ["python-3.10", "nodejs-20_x"]
 
 [nix]
 channel = "stable-23_05"
