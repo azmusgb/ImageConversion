@@ -20,11 +20,11 @@ git commit -m "Deploy from Replit"
 # Push the changes to the GitHub repository
 git push -u origin main -f
 
-# Install npm if not installed
+# Install Node.js 20 LTS if not installed
 if ! command -v npm &> /dev/null
 then
     echo "npm not found, installing..."
-    curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
     apt-get install -y nodejs
 fi
 
