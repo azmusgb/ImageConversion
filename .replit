@@ -1,23 +1,17 @@
 entrypoint = "app.py"
-modules = ["python-3.10", "nodejs-20_x"]
-
+modules = ["python-3.10", "nodejs-18_x"]  
 [nix]
 channel = "stable-23_05"
-
 [unitTest]
 language = "python3"
-
 [gitHubImport]
 requiredFiles = [".replit", "replit.nix"]
-
 [deployment]
 run = ["python3", "app.py"]
 deploymentTarget = "cloudrun"
-
 [[ports]]
 localPort = 5000
 externalPort = 80
-
 [auth]
 pageEnabled = true
 buttonEnabled = false

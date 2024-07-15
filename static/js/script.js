@@ -106,11 +106,19 @@ function loadCatalog() {
                 <td class="p-2 border">${item.contrast}</td>
                 <td class="p-2 border">${item.color}</td>
                 <td class="p-2 border">${item.rotate}</td>
-                <td class="p-2 border">${item.resize_width} x ${item.resize_height}</td>
-                <td class="p-2 border">${item.crop ? item.crop.join(", ") : ""}</td>
+                <td class="p-2 border">${item.resize_width} x ${
+          item.resize_height
+        }</td>
+                <td class="p-2 border">${
+                  item.crop ? item.crop.join(", ") : ""
+                }</td>
                 <td class="p-2 border">${item.grayscale}</td>
-                <td class="p-2 border">${new Date(item.timestamp).toLocaleString()}</td>
-                <td class="p-2 border"><img src="/images/${item.filename}" alt="Preview" class="w-16 h-16 rounded shadow"></td>
+                <td class="p-2 border">${new Date(
+                  item.timestamp
+                ).toLocaleString()}</td>
+                <td class="p-2 border"><img src="/images/${
+                  item.filename
+                }" alt="Preview" class="w-16 h-16 rounded shadow"></td>
             `;
         tbody.appendChild(row);
       });
