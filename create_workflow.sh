@@ -57,7 +57,7 @@ git add .github/workflows/deploy.yml
 git commit -m "Add GitHub Actions workflow for Netlify deployment"
 
 # Update remote URL to include PAT
-git remote set-url origin https://YOUR_USERNAME:YOUR_TOKEN@github.com/azmusgb/ImageConversion.git
+git remote set-url origin https://azmusgb:@github.com/azmusgb/ImageConversion.git
 
 # Push the changes
 git push origin main
