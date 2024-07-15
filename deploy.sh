@@ -1,73 +1,79 @@
 #!/bin/bash
-# Step 1: Initialize a new git repository or reinitialize an existing one
-git init
-git remote remove origin
-git remote add origin https://azmusgb:${GITHUB_TOKEN}@github.com/azmusgb/ImageConversion.git
-# Step 2: Update .replit file
-cat <<EOT > .replit
-entrypoint = "app.py"
-modules = ["python-3.10", "nodejs-18_x"]  
-[nix]
-channel = "stable-23_05"
-[unitTest]
-language = "python3"
-[gitHubImport]
-requiredFiles = [".replit", "replit.nix"]
-[deployment]
-run = ["python3", "app.py"]
-deploymentTarget = "cloudrun"
-[[ports]]
-localPort = 5000
-externalPort = 80
-[auth]
-pageEnabled = true
-buttonEnabled = false
-EOT
-# Step 3: Update replit.nix file
-cat <<EOT > replit.nix
-{ pkgs }: {
-  deps = [
-    pkgs.python310Full
-    pkgs.python310Packages.flask
-    pkgs.python310Packages.pillow
-    pkgs.python310Packages.sqlalchemy
-    pkgs.python310Packages.flask_sqlalchemy
-    pkgs.nodejs-18_x 
-  ];
+
+# 1. Set Environment Variables (for security)
+VERCEL_TOKEN=$VERCEL_TOKEN  # Access the secret
+VERCEL_PROJECT_ID="prj_u4WVVbWTI3PJ5OEUt5w2eez4Dlri"
+BUILD_DIR="build"
+
+# 2. Ensure required files are in place
+
+# Create .vercel/project.json
+mkdir -p .vercel
+cat <<EOT > .vercel/project.json
+{
+  "projectId": "$VERCEL_PROJECT_ID",
+  "orgId": "your-org-id",
+  "settings": {
+    "framework": "Flask"
+  }
 }
 EOT
-# Step 4: Create runtime.txt to specify Python version
-echo "python-3.10" > runtime.txt
-# Step 5: Update netlify.toml file
-cat <<EOT > netlify.toml
-[build]
-  publish = "templates"
-  command = "source /opt/buildhome/repo/venv/bin/activate && pip install -r requirements.txt && python app.py"
-[context.production.environment]
-  NETLIFY_AUTH_TOKEN = "${NETLIFY_AUTH_TOKEN}"
-[build.environment]
-  PYTHON_VERSION = "3.10"
-  NODE_VERSION = "18" 
-[functions]
-  directory = "netlify/functions"
-[settings]
-  python = "3.10"
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+
+# Create runtime.txt
+cat <<EOT > runtime.txt
+python-3.10
 EOT
-# Step 6: Create and activate the Python virtual environment
-python3.10 -m venv venv
-# Step 7: Install dependencies within the virtual environment
-venv/bin/pip install -r requirements.txt
-# Step 8:  Install Netlify CLI within the virtual environment
-venv/bin/pip install netlify-cli
-# Step 9: Add all changes to git and commit
-git add .
-git commit -m "Deploy from Replit and update configuration files"
-# Step 10: Push to the repository
-git push -u origin main --force
-# Step 11: Deploy to Netlify (ensure the virtual environment is activated)
-export NETLIFY_AUTH_TOKEN=${NETLIFY_AUTH_TOKEN}
-venv/bin/netlify deploy --prod --dir=. --site=a3b5bb87-099a-46d2-aed3-f50ed90fbc96
+
+# Create requirements.txt if it doesn't exist
+if [ ! -f requirements.txt ]; then
+  cat <<EOT > requirements.txt
+blinker==1.8.2
+click==8.1.7
+Flask==2.0.3
+greenlet==3.0.3
+itsdangerous==2.2.0
+Jinja2==3.1.4
+MarkupSafe==2.1.5
+pillow==10.4.0
+SQLAlchemy==2.0.31
+typing_extensions==4.12.12
+Werkzeug==3.0.3
+EOT
+fi
+
+# Create build.sh for building the Flask app
+cat <<EOT > build.sh
+#!/bin/bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+# Add your build commands here (e.g., collect static files)
+deactivate
+EOT
+chmod +x build.sh
+
+# 3. Install n, a Node.js version manager, to manage Node.js versions
+curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o n
+bash n 20.0.0
+
+# 4. Upgrade npm to the latest version
+npm install -g npm@latest
+
+# 5. Install Vercel CLI locally within the project
+npm install vercel
+
+# 6. Build your Flask app
+./build.sh  # Run your build script
+
+# 7. Deploy to Vercel using the locally installed Vercel CLI
+npx vercel deploy \
+  --prod \
+  --token $VERCEL_TOKEN \
+  --project $VERCEL_PROJECT_ID \
+  --path $BUILD_DIR
+
+# 8. Clean up the build directory (optional)
+rm -rf $BUILD_DIR
+
+# 9. Success message
+echo "Deployment successful!"
