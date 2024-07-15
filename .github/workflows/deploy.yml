@@ -21,9 +21,17 @@ jobs:
     - name: Create and activate virtual environment
       run: |
         python -m venv venv
+        if [ ! -d "venv/bin" ]; then
+          echo "Error: venv/bin directory was not created."
+          exit 1
+        fi
         echo "Virtual environment created. Listing contents of venv/bin:"
         ls -l venv/bin/
         source venv/bin/activate
+        if [ ! -f "venv/bin/activate" ]; then
+          echo "Error: venv/bin/activate script not found."
+          exit 1
+        fi
         echo "Virtual environment activated. Installing dependencies:"
         pip install -r requirements.txt
         echo "Dependencies installed. Listing contents of venv/bin again:"
