@@ -10,23 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - name: Setup Python
-        uses: actions/setup-python@v5.1.1
-        with:
-          python-version: '3.10'
-        
-      - name: Install dependencies
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Deploy to Render
-        env:
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-        run: |
-          curl -fsSL https://cli-assets.render.com/install.sh | sh
-          render deploy --service <your-service-id>
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        ls venv/bin/  # List the contents of venv/bin to verify the virtual environment creation
+        source venv/bin/activate
+        pip install -r requirements.txt
+
+    - name: Deploy to Render
+      env:
+        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      run: |
+        curl -fsSL https://cli-assets.render.com/install.sh | sh
+        render deploy --service srv-cqae88tds78s739qgpjg --token ${{ secrets.RENDER_API_KEY }}
