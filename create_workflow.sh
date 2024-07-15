@@ -60,6 +60,6 @@ git commit -m "Add GitHub Actions workflow for Netlify deployment"
 git remote set-url origin https://azmusgb:@github.com/azmusgb/ImageConversion.git
 
 # Push the changes
-git push origin main
+git push origin main --force
 
 echo "Workflow file pushed to GitHub."
