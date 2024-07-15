@@ -11,19 +11,18 @@ RENDER_API_KEY=$RENDER_API_KEY
 RENDER_PROJECT_ID="srv-cqae88tds78s739qgpjg"
 BUILD_DIR="."
 
-# 2. Install Vercel CLI (if not already installed)
-npm install -g vercel
+# 2. Install Render CLI
+curl -fsSL https://cli-assets.render.com/install.sh | sh
 
-# 3. Build your Flask app
-# Assuming you have a build script or steps
+# 3. Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate
+
+# 4. Install dependencies
 pip install -r requirements.txt
 
-# 4. Deploy to Render
-curl -fsSL https://cli-assets.render.com/install.sh | sh
+# 5. Deploy to Render
 render deploy --service $RENDER_PROJECT_ID --token $RENDER_API_KEY
-
-# 5. Clean up the build directory (optional)
-# rm -rf $BUILD_DIR
 
 # 6. Success message
 echo "Deployment successful!"
