@@ -242,6 +242,42 @@ files = [
 ]
 
 [[package]]
+name = "nodejs"
+version = "0.1.1"
+description = "Python bindings and utils for Node.js and io.js"
+optional = false
+python-versions = "*"
+files = [
+    {file = "nodejs-0.1.1.tar.gz", hash = "sha256:4c585fecc51a91b151bbc6dd01c0fb8d93f29f897a8298009205b59b80b52933"},
+]
+
+[package.dependencies]
+optional-django = "0.1.0"
+
+[[package]]
+name = "npm"
+version = "0.1.1"
+description = "Python bindings and utils for npm."
+optional = false
+python-versions = "*"
+files = [
+    {file = "npm-0.1.1.tar.gz", hash = "sha256:84aefc83a3486d034c4c14f8bcd4b746b95b529289b0d042c268f6201c3034e9"},
+]
+
+[package.dependencies]
+optional-django = "0.1.0"
+
+[[package]]
+name = "optional-django"
+version = "0.1.0"
+description = "Utils for apps to provide optional support for django applications"
+optional = false
+python-versions = "*"
+files = [
+    {file = "optional-django-0.1.0.tar.gz", hash = "sha256:77d6b9fb74bda30583e1af4683a39e0af725cea6003252bba75838f4939326c5"},
+]
+
+[[package]]
 name = "sqlalchemy"
 version = "2.0.31"
 description = "Database Abstraction Library"
@@ -359,4 +395,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10.0,<3.12"
-content-hash = "8e366c56e1b69201702281f1cde1dc0951dcacc94a63ad13e0c3e62f235768e9"
+content-hash = "f93f916764421f6dd7fbe67d673bd321a973935dbd53b9e85e9bc3b4d01abc1e"

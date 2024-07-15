@@ -20,12 +20,11 @@ git commit -m "Deploy from Replit"
 # Push the changes to the GitHub repository
 git push -u origin main -f
 
-# Install Node.js 20 LTS if not installed
+# Check if npm is installed
 if ! command -v npm &> /dev/null
 then
-    echo "npm not found, installing..."
-    curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-    apt-get install -y nodejs
+    echo "npm not found. Please add Node.js to your Replit environment."
+    exit 1
 fi
 
 # Install Netlify CLI if not already installed
