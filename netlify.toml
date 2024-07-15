@@ -1,15 +1,10 @@
-[build]
-  publish = "templates"
-  command = "source /opt/buildhome/repo/venv/bin/activate && pip install -r requirements.txt && python app.py"
-[context.production.environment]
-  NETLIFY_AUTH_TOKEN = "nfp_ECRqBAZpanYVEp9tBy7PU3r2oBNo4tMod100"
 [build.environment]
   PYTHON_VERSION = "3.10"
-  NODE_VERSION = "18" 
-[functions]
-  directory = "netlify/functions"
+  NODE_VERSION = "18"
+
 [settings]
   python = "3.10"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
