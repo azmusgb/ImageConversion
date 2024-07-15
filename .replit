@@ -1,5 +1,5 @@
 entrypoint = "app.py"
-modules = ["python-3.10", "nodejs-20"]
+modules = ["python-3.8", "nodejs-20"]
 
 [nix]
 channel = "stable-23_05"
@@ -11,7 +11,7 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["python3", "app.py"]
+run = ["python3.8", "app.py"]
 deploymentTarget = "cloudrun"
 
 [[ports]]

@@ -1,9 +1,10 @@
-p{pkgs}: {
+{ pkgs }: {
   deps = [
-    pkgs.python311Packages.gunicorn
-    pkgs.php82
-    pkgs.rsync
-    pkgs.imagemagick
-    pkgs.openssh
+    pkgs.python38Full
+    pkgs.python38Packages.flask
+    pkgs.python38Packages.pillow
+    pkgs.python38Packages.sqlalchemy
+    pkgs.python38Packages.flask_sqlalchemy
+    pkgs.nodejs-20_x
   ];
 }
