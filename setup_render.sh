@@ -47,7 +47,7 @@ cat <<EOT > replit.nix
 EOT
 
 # Update runtime.txt file
-echo "python-3.10.0" > runtime.txt
+echo "python-3.10" > runtime.txt
 
 # Create and activate the Python virtual environment
 python3.10 -m venv venv
