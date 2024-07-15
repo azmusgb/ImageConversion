@@ -25,6 +25,13 @@ if ! command -v netlify &> /dev/null; then
     npm install -g netlify-cli
 fi
 
+# Ensure Python virtual environment is created and activated
+python3.8 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
 # Deploy to Netlify
 export NETLIFY_AUTH_TOKEN=${NETLIFY_AUTH_TOKEN}
 netlify deploy --prod --dir=. --site=a3b5bb87-099a-46d2-aed3-f50ed90fbc96
