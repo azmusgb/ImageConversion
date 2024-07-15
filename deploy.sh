@@ -26,5 +26,9 @@ if ! command -v netlify &> /dev/null; then
 fi
 
 # Deploy to Netlify
-export NETLIFY_AUTH_TOKEN=nfp_ECRqBAZpanYVEp9tBy7PU3r2oBNo4tMod100
+if [ -z "$NETLIFY_AUTH_TOKEN" ]; then
+    echo "NETLIFY_AUTH_TOKEN not set. Please set it in your environment variables."
+    exit 1
+fi
+
 netlify deploy --prod --dir=. --site=a3b5bb87-099a-46d2-aed3-f50ed90fbc96
