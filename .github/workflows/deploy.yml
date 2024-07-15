@@ -25,17 +25,10 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
+          context: .
           push: true
           tags: greenbreard/imageconversion:tagname
 
       - name: Post Log in to Docker Hub
         run: echo "Logged in to Docker Hub"
-
-      - name: Set up Docker Buildx
-        run: docker buildx create --use
-
-      - name: Post Set up Docker Buildx
-        run: echo "Set up Docker Buildx"
-
-      - name: Build and push Docker image
-        run: docker buildx build --push --tag greenbreard/imageconversion:tagname .
+        
