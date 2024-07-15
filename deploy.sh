@@ -85,10 +85,13 @@ git commit -m "Deploy from Replit and update configuration files"
 git push -u origin main --force
 
 # Step 9: Ensure Node.js and npm are available
+# Skipping the apt-get part, using nvm to install nodejs instead
 if ! command -v npm &> /dev/null; then
     echo "npm not found, installing..."
-    curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-    sudo apt-get install -y nodejs
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    nvm install 16
 fi
 
 # Step 10: Ensure Netlify CLI is installed
