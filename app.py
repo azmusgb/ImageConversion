@@ -4,11 +4,14 @@ import os
 import io
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///catalog.db'
 db = SQLAlchemy(app)
+
+
 class ImageCatalog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sku = db.Column(db.String(50), nullable=False)
@@ -23,12 +26,18 @@ class ImageCatalog(db.Model):
     crop = db.Column(db.PickleType, nullable=True)
     grayscale = db.Column(db.Boolean, default=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit(
         '.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     sku = request.form.get('sku')
@@ -67,12 +76,16 @@ def upload_file():
             'message': 'File uploaded and processed successfully',
             'processed_image': processed_filename
         })
+
+
 @app.route('/images/<filename>', methods=['GET'])
 def get_image(filename):
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     if os.path.exists(filepath):
         return send_file(filepath, mimetype='image/jpeg')
     return jsonify({'error': 'File not found'}), 404
+
+
 @app.route('/adjust', methods=['POST'])
 def adjust_image():
     data = request.json
@@ -128,6 +141,8 @@ def adjust_image():
     image.save(img_io, 'JPEG')
     img_io.seek(0)
     return send_file(img_io, mimetype='image/jpeg')
+
+
 @app.route('/catalog', methods=['GET'])
 def get_catalog():
     images = ImageCatalog.query.all()
@@ -146,12 +161,13 @@ def get_catalog():
             'crop': image.crop,
             'grayscale': image.grayscale,
             'timestamp': image.timestamp
-                    })
+        })
         return jsonify(catalog)
+
+
 if __name__ == '__main__':
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
     with app.app_context():
         db.create_all()
     app.run(host='0.0.0.0', port=5000)
-    
