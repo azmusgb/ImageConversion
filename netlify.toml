@@ -9,12 +9,12 @@
   PYTHON_VERSION = "3.8"
 
 [functions]
-  directory = "netlify/functions"
+  directory = "netlify/functions" # Ensure this directory exists or remove this line
 
 [settings]
   python = "3.8"
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/templates/index.html"
   status = 200
