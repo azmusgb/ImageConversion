@@ -9,7 +9,7 @@ NETLIFY_AUTH_TOKEN="nfp_ECRqBAZpanYVEp9tBy7PU3r2oBNo4tMod100"
 git init
 
 # Add the remote GitHub repository
-git remote add origin $GITHUB_REPO_URL
+git remote add origin $GITHUB_REPO_URL 2>/dev/null
 
 # Add all files to the repository
 git add .
@@ -19,6 +19,14 @@ git commit -m "Deploy from Replit"
 
 # Push the changes to the GitHub repository
 git push -u origin main -f
+
+# Install npm if not installed
+if ! command -v npm &> /dev/null
+then
+    echo "npm not found, installing..."
+    curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+    apt-get install -y nodejs
+fi
 
 # Install Netlify CLI if not already installed
 npm install -g netlify-cli
