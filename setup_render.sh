@@ -1,20 +1,77 @@
 #!/bin/bash
 
-# Step 1: Set up the repository structure
-mkdir -p .github/workflows
+# Initialize a new git repository or reinitialize an existing one
+git init
+git remote remove origin
+git remote add origin https://azmusgb:${GITHUB_TOKEN}@github.com/azmusgb/ImageConversion.git
 
-# Step 2: Create render.yaml
-cat <<EOT > render.yaml
-services:
-  - type: web
-    name: imageconversion
-    env: python
-    plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
+# Update .replit file
+cat <<EOT > .replit
+entrypoint = "app.py"
+modules = ["python-3.10", "nodejs-20_x"]
+
+[nix]
+channel = "stable-23_05"
+
+[unitTest]
+language = "python3"
+
+[gitHubImport]
+requiredFiles = [".replit", "replit.nix"]
+
+[deployment]
+run = ["python3", "app.py"]
+deploymentTarget = "cloudrun"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[auth]
+pageEnabled = true
+buttonEnabled = false
 EOT
 
-# Step 3: Create GitHub Actions Workflow
+# Update replit.nix file
+cat <<EOT > replit.nix
+{ pkgs }: {
+  deps = [
+    pkgs.python310Full
+    pkgs.python310Packages.flask
+    pkgs.python310Packages.pillow
+    pkgs.python310Packages.sqlalchemy
+    pkgs.python310Packages.flask_sqlalchemy
+    pkgs.nodejs-20_x  # Correct Node.js version
+  ];
+}
+EOT
+
+# Update runtime.txt file
+echo "python-3.10.0" > runtime.txt
+
+# Create and activate the Python virtual environment
+python3.10 -m venv venv
+source venv/bin/activate
+
+# Install dependencies within the virtual environment
+pip install -r requirements.txt
+
+# Add all changes to git and commit
+git add .
+git commit -m "Deploy from Replit and update configuration files"
+
+# Push to the repository
+git push -u origin main --force
+
+# Ensure Node.js and npm are available
+if ! command -v npm &> /dev/null; then
+    echo "npm not found, installing..."
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+    apt-get install -y nodejs
+fi
+
+# Update GitHub Actions workflow file
+mkdir -p .github/workflows
 cat <<EOT > .github/workflows/deploy.yml
 name: Deploy to Render
 
@@ -44,48 +101,7 @@ jobs:
 
       - name: Deploy to Render
         env:
-          RENDER_API_KEY: \${{ secrets.RENDER_API_KEY }}
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
-          curl -fsSL https://cli-assets.render.com/install.sh | sh
-          render deploy --service <your-service-id>
+          curl -L https://api.render.com/deploy/srv-cqae88tds78s739qgpjg?key=${{ secrets.RENDER_API_KEY }}
 EOT
-
-# Step 4: Ensure requirements.txt is up-to-date
-cat <<EOT > requirements.txt
-blinker==1.8.2
-click==8.1.7
-Flask==2.0.3
-greenlet==3.0.3
-itsdangerous==2.2.0
-Jinja2==3.1.4
-MarkupSafe==2.1.5
-nodejs==0.1.1
-npm==0.1.1
-optional-django==0.1.0
-packaging==21.4
-pillow==10.4.0
-SQLAlchemy==2.0.31
-typing_extensions==4.12.12
-Werkzeug==3.0.3
-gunicorn==20.1.0
-EOT
-
-# Step 5: Create Procfile
-cat <<EOT > Procfile
-web: gunicorn app:app
-EOT
-
-# Step 6: Update app.py
-if ! grep -q "if __name__ == \"__main__\":" app.py; then
-  echo -e "\nif __name__ == \"__main__\":\n    app.run(host='0.0.0.0', port=5000)" >> app.py
-fi
-
-# Step 7: Git setup
-git add .
-git commit -m "Configure deployment to Render"
-git push origin main
-
-# Step 8: Instructions for GitHub secrets
-echo "Ensure to add your Render API key as a secret named 'RENDER_API_KEY' in your GitHub repository settings."
-
-echo "Setup completed. Push your changes to GitHub to start the deployment process."
