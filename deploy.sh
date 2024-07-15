@@ -71,5 +71,3 @@ git push -u origin main --force
 # Step 11: Deploy to Netlify (ensure the virtual environment is activated)
 export NETLIFY_AUTH_TOKEN=${NETLIFY_AUTH_TOKEN}
 venv/bin/netlify deploy --prod --dir=. --site=a3b5bb87-099a-46d2-aed3-f50ed90fbc96
-# Deactivate virtual environment
-deactivate
